@@ -4,7 +4,7 @@ M = {}
 local root = ""
 
 M.set_root = function(r)
-    root = r
+    root = vim.fs.normalize(r)
 end
 
 M.get_root = function()
@@ -17,7 +17,7 @@ M.find_notes = function()
         vim.fs.find(function(name) return name:match(".*%.md$") end, {
             limit = math.huge,
             type = "file",
-            path = vim.fs.normalize(root),
+            path = root,
         })
     )
 end
@@ -30,7 +30,7 @@ M.open_win = function(notes)
     local wins = {}
     local split_direction = { "below", "left", "above", "right" }
     for i, fname in ipairs(notes) do
-        local buf = vim.fn.bufadd(vim.fs.normalize(string.format("%s/%s.md", root, fname)))
+        local buf = vim.fn.bufadd(string.format("%s/%s.md", root, fname))
         table.insert(wins, i, buf)
         if i == 1 then
             vim.api.nvim_win_set_buf(0, buf)
