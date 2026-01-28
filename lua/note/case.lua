@@ -39,7 +39,7 @@ M.conv = function(s)
     end
     local name = M.to_kebab(prefix_padding .. vim.trim(s) .. postfix_padding)
     if not M.is_valid_name(name) then
-        error(string.format("invalid name: %s", name), vim.log.levels.ERROR)
+        error(string.format("invalid name: %s", name))
     end
     return name
 end

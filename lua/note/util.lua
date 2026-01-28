@@ -9,7 +9,7 @@ M.set_root = function(r) root = vim.fs.normalize(r) end
 
 M.get_root = function()
     if root == "" then
-        error("root not set. Did you call setup()?", vim.log.levels.ERROR)
+        error("root not set. Did you call setup()?")
     end
     return root
 end
