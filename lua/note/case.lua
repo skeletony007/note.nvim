@@ -13,7 +13,7 @@ end
 --- Check if a string is valid as a note name
 ---@param s string
 ---@return boolean
-M.is_valid_name = function(s) return not s:find("[^a-z0-9%-]") end
+M.is_valid_name = function(s) return not s:find("[^a-z0-9%-/]") end
 
 --- Converts a string into an acceptable format for use in notes names
 ---@param s string

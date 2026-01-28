@@ -11,7 +11,6 @@ return {
     { "*", "asterisk" },
     { ",", "comma" },
     { "%.", "dot" },
-    { "/", "foreword divide" },
     { ":", "colon" },
     { ";", "semicolon" },
     { "<", "less than" },
