@@ -17,7 +17,28 @@ end
 M.find_notes = function()
     return vim.tbl_map(
         function(item) return item:sub(#root + 2, -4) end,
-        vim.fs.find(function(name) return name:match("%.md$") end, {
+        vim.fs.find(function(item)
+            if not (item:match("%.md$") and case.is_valid_name(item:sub(#root + 2, -4))) then
+                return false
+            end
+            return true
+        end, {
+            limit = math.huge,
+            type = "file",
+            path = M.get_root(),
+        })
+    )
+end
+
+M.find_invalid_notes = function()
+    return vim.tbl_map(
+        function(item) return item:sub(#root + 2, -4) end,
+        vim.fs.find(function(item)
+            if not (item:match("%.md$") and not case.is_valid_name(item:sub(#root + 2, -4))) then
+                return false
+            end
+            return true
+        end, {
             limit = math.huge,
             type = "file",
             path = M.get_root(),
