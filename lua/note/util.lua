@@ -15,10 +15,15 @@ M.get_root = function()
 end
 
 M.find_notes = function()
-    return vim.tbl_map(
+    local some_invalid
+    local notes = vim.tbl_map(
         function(item) return item:sub(#root + 2, -4) end,
         vim.fs.find(function(item)
-            if not (item:match("%.md$") and case.is_valid_name(item:sub(#root + 2, -4))) then
+            if not item:match("%.md$") then
+                return false
+            end
+            if not case.is_valid_name(item:sub(#root + 2, -4)) then
+                some_invalid = true
                 return false
             end
             return true
@@ -28,6 +33,8 @@ M.find_notes = function()
             path = M.get_root(),
         })
     )
+    vim.notify("[note.nvim] not using some notes with invalid names", vim.log.levels.WARN, { title = "note.nvim" })
+    return notes
 end
 
 M.find_invalid_notes = function()
@@ -55,7 +62,7 @@ M.open_win = function(notes)
     local split_direction = { "below", "left", "above", "right" }
     for i, fname in ipairs(notes) do
         if not case.is_valid_name(fname) then
-            vim.notify(string.format("invalid name: %s", fname), vim.log.levels.WARN, { title = "note.nvim" })
+            vim.notify(string.format("[note.nvim] invalid name: %s", fname), vim.log.levels.WARN, { title = "note.nvim" })
         end
         local buf = vim.fn.bufadd(string.format("%s/%s.md", M.get_root(), fname))
         table.insert(wins, i, buf)
