@@ -56,7 +56,7 @@ end
 --- Open note buffers in windows. Firstly in the current window, then new splits
 --- (in a nested spiral pattern of repeating "left", "above", "right", and "below")
 ---@param notes string[] array of window names
----@return integer[]|nil wins array of each new window ID, or nil on error
+---@return integer[] wins array of each new window ID, or nil on error
 M.open_win = function(notes)
     local wins = {}
     local split_direction = { "below", "left", "above", "right" }
